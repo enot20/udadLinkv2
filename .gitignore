@@ -1,0 +1,36 @@
+# Dependencias de Composer
+/vendor/
+
+# Dependencias de Node
+/node_modules/
+npm-debug.log
+yarn-error.log
+pnpm-debug.log
+package-lock.json
+yarn.lock
+
+# Archivos de entorno
+.env
+.env.backup
+.env.local
+
+# Cache y compilados
+/bootstrap/cache/*.php
+/storage/*.key
+/storage/framework/cache/*
+/storage/framework/sessions/*
+/storage/framework/views/*
+/storage/logs/*
+
+# Archivos de pruebas
+/tests/
+
+# Archivos de IDE y sistema
+/.idea/
+/.vscode/
+/*.swp
+.DS_Store
+Thumbs.db
+
+# Otros temporales
+/public/storage

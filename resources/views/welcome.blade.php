@@ -5,13 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>UCADLink-2</title>
 
-    <!-- Fuente Poppins cargada de forma local -->
     <link rel="stylesheet" href="{{ asset('fonts/poppins.css') }}">
 
     @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     @else
-        <!-- Aquí ya no usamos CDN, puedes dejar vacío o poner un fallback local -->
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
         <script src="{{ asset('js/app.js') }}"></script>
     @endif
@@ -20,24 +18,16 @@
         body { 
             font-family: 'Poppins', sans-serif;
             min-height: 100vh;
-            background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 50%, #ffffff 100%);
-        }
-        
-        .login-container {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 1.5rem;
+            overflow-x: hidden;
         }
         
         .login-card {
             width: 100%;
-            max-width: 400px;
+            max-width: 380px;
             background: #ffffff;
-            border-radius: 16px;
-            box-shadow: 0 25px 50px -12px rgba(14, 165, 233, 0.15);
-            padding: 2.5rem 2rem;
+            border-radius: 20px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+            padding: 2rem;
         }
         
         .tab-btn {
@@ -117,187 +107,182 @@
         
         @media (max-width: 480px) {
             .login-card {
-                padding: 2rem 1.5rem;
                 max-width: 100%;
+                border-radius: 16px;
             }
         }
     </style>
 </head>
-<body>
-    <div class="login-container">
-        <div class="login-card">
-            <!-- Header -->
-            <div class="text-center mb-6">
-                <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-600 to-blue-700 rounded-2xl mb-4 shadow-lg shadow-blue-600/30">
-                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/>
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/>
-                    </svg>
-                </div>
-                <h1 class="text-2xl font-bold text-gray-900">UCADLink-v2</h1>
-                <p class="text-gray-500 text-sm mt-1">Universidad Cristiana de las Asambleas de Dios</p>
-            </div>
-
-            <!-- Tabs -->
-            <div class="flex border-b border-gray-200 mb-6">
-                <button type="button" onclick="showTab('login')" id="tab-login" class="tab-btn active">
-                    Iniciar Sesión
-                </button>
-                <button type="button" onclick="showTab('register')" id="tab-register" class="tab-btn">
-                    Regístrate
-                </button>
-            </div>
-
-            <!-- Login Form -->
-            <div id="login-form">
-                <form method="POST" action="{{ route('login') }}">
-                    @csrf
-
-                    <div class="space-y-4">
-                        <div>
-                            <label for="login-email" class="label-input">Correo Institucional</label>
-                            <input 
-                                id="login-email" 
-                                name="email" 
-                                type="email" 
-                                required 
-                                autocomplete="username"
-                                class="input-field"
-                                placeholder="correo@ucad.edu.sv"
-                                oninput="validateEmail(this)"
-                            >
-                            <p id="email-error" class="text-red-500 text-xs mt-1" style="display: none;"></p>
-                            @error('email')
-                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                            @enderror
-                        </div>
-
-                        <div>
-                            <label for="login-password" class="label-input">Contraseña</label>
-                            <input 
-                                id="login-password" 
-                                name="password" 
-                                type="password" 
-                                required 
-                                autocomplete="current-password"
-                                class="input-field"
-                                placeholder="••••••••"
-                            >
-                            @error('password')
-                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <div class="flex items-center justify-between mt-5 mb-6">
-                        <label class="flex items-center cursor-pointer">
-                            <input type="checkbox" name="remember" class="checkbox-custom">
-                            <span class="ml-2 text-gray-600 text-sm">Recordarme</span>
-                        </label>
-                        @if (Route::has('password.request'))
-                            <a href="{{ route('password.request') }}" class="text-blue-600 text-sm hover:underline">
-                                ¿Olvidaste tu contraseña?
-                            </a>
-                        @endif
-                    </div>
-
-                    <button type="submit" class="btn-primary">
+<body style="min-height: 100vh; margin: 0; padding: 0;">
+    <!-- Fondo con imagen -->
+    <div style="min-height: 100vh; width: 100%; position: relative; background-image: url('{{ asset('images/login-2.jpg') }}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+        
+        <!-- Contenido: Login en esquina inferior izquierda -->
+        <div style="position: absolute; bottom: 15%; left: 2rem; max-width: 90vw;">
+            
+            <!-- Login Card -->
+            <div class="login-card">
+                <!-- Tabs -->
+                <div class="flex border-b border-gray-200 mb-6">
+                    <button type="button" onclick="showTab('login')" id="tab-login" class="tab-btn active">
                         Iniciar Sesión
                     </button>
-                </form>
-            </div>
-
-            <!-- Register Form -->
-            <div id="register-form" class="hidden">
-                <form method="POST" action="{{ route('register') }}">
-                    @csrf
-
-                    <div class="space-y-4">
-                        <div>
-                            <label for="register-name" class="label-input">Nombre Completo</label>
-                            <input 
-                                id="register-name" 
-                                name="name" 
-                                type="text" 
-                                required 
-                                autocomplete="name"
-                                class="input-field"
-                                placeholder="Juan Pérez"
-                            >
-                            @error('name')
-                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                            @enderror
-                        </div>
-
-                        <div>
-                            <label for="register-carnet" class="label-input">Carnet Universitario</label>
-                            <input 
-                                id="register-carnet" 
-                                name="carnet" 
-                                type="text" 
-                                required 
-                                autocomplete="off"
-                                class="input-field"
-                                placeholder="00012345"
-                            >
-                            @error('carnet')
-                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                            @enderror
-                        </div>
-
-                        <div>
-                            <label for="register-email" class="label-input">Correo Institucional</label>
-                            <input 
-                                id="register-email" 
-                                name="email" 
-                                type="email" 
-                                required 
-                                autocomplete="email"
-                                class="input-field"
-                                placeholder="correo@ucad.edu.sv"
-                            >
-                            @error('email')
-                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                            @enderror
-                        </div>
-
-                        <div>
-                            <label for="register-password" class="label-input">Contraseña</label>
-                            <input 
-                                id="register-password" 
-                                name="password" 
-                                type="password" 
-                                required 
-                                autocomplete="new-password"
-                                class="input-field"
-                                placeholder="••••••••"
-                            >
-                            @error('password')
-                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                            @enderror
-                        </div>
-
-                        <div>
-                            <label for="register-password-confirm" class="label-input">Confirmar Contraseña</label>
-                            <input 
-                                id="register-password-confirm" 
-                                name="password_confirmation" 
-                                type="password" 
-                                required 
-                                autocomplete="new-password"
-                                class="input-field"
-                                placeholder="••••••••"
-                            >
-                            @error('password_confirmation')
-                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <button type="submit" class="btn-primary mt-6">
-                        Crear Cuenta
+                    <button type="button" onclick="showTab('register')" id="tab-register" class="tab-btn">
+                        Regístrate
                     </button>
-                </form>
+                </div>
+
+                <!-- Login Form -->
+                <div id="login-form">
+                    <form method="POST" action="{{ route('login') }}">
+                        @csrf
+
+                        <div class="space-y-4">
+                            <div>
+                                <label for="login-email" class="label-input">Correo Institucional</label>
+                                <input 
+                                    id="login-email" 
+                                    name="email" 
+                                    type="email" 
+                                    required 
+                                    autocomplete="username"
+                                    class="input-field"
+                                    placeholder="correo@ucad.edu.sv"
+                                    oninput="validateEmail(this)"
+                                >
+                                <p id="email-error" class="text-red-500 text-xs mt-1" style="display: none;"></p>
+                                @error('email')
+                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <div>
+                                <label for="login-password" class="label-input">Contraseña</label>
+                                <input 
+                                    id="login-password" 
+                                    name="password" 
+                                    type="password" 
+                                    required 
+                                    autocomplete="current-password"
+                                    class="input-field"
+                                    placeholder="••••••••"
+                                >
+                                @error('password')
+                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between mt-5 mb-6">
+                            <label class="flex items-center cursor-pointer">
+                                <input type="checkbox" name="remember" class="checkbox-custom">
+                                <span class="ml-2 text-gray-600 text-sm">Recordarme</span>
+                            </label>
+                            @if (Route::has('password.request'))
+                                <a href="{{ route('password.request') }}" class="text-blue-600 text-sm hover:underline">
+                                    ¿Olvidaste tu contraseña?
+                                </a>
+                            @endif
+                        </div>
+
+                        <button type="submit" class="btn-primary">
+                            Iniciar Sesión
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Register Form -->
+                <div id="register-form" class="hidden">
+                    <form method="POST" action="{{ route('register') }}">
+                        @csrf
+
+                        <div class="space-y-4">
+                            <div>
+                                <label for="register-name" class="label-input">Nombre Completo</label>
+                                <input 
+                                    id="register-name" 
+                                    name="name" 
+                                    type="text" 
+                                    required 
+                                    autocomplete="name"
+                                    class="input-field"
+                                    placeholder="Juan Pérez"
+                                >
+                                @error('name')
+                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <div>
+                                <label for="register-carnet" class="label-input">Carnet Universitario</label>
+                                <input 
+                                    id="register-carnet" 
+                                    name="carnet" 
+                                    type="text" 
+                                    required 
+                                    autocomplete="off"
+                                    class="input-field"
+                                    placeholder="00012345"
+                                >
+                                @error('carnet')
+                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <div>
+                                <label for="register-email" class="label-input">Correo Institucional</label>
+                                <input 
+                                    id="register-email" 
+                                    name="email" 
+                                    type="email" 
+                                    required 
+                                    autocomplete="email"
+                                    class="input-field"
+                                    placeholder="correo@ucad.edu.sv"
+                                >
+                                @error('email')
+                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <div>
+                                <label for="register-password" class="label-input">Contraseña</label>
+                                <input 
+                                    id="register-password" 
+                                    name="password" 
+                                    type="password" 
+                                    required 
+                                    autocomplete="new-password"
+                                    class="input-field"
+                                    placeholder="••••••••"
+                                >
+                                @error('password')
+                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <div>
+                                <label for="register-password-confirm" class="label-input">Confirmar Contraseña</label>
+                                <input 
+                                    id="register-password-confirm" 
+                                    name="password_confirmation" 
+                                    type="password" 
+                                    required 
+                                    autocomplete="new-password"
+                                    class="input-field"
+                                    placeholder="••••••••"
+                                >
+                                @error('password_confirmation')
+                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-primary mt-6">
+                            Crear Cuenta
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

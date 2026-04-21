@@ -9,6 +9,9 @@
 
         <!-- Fonts -->
         <link rel="stylesheet" href="{{ asset('fonts/figtree.css') }}">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -19,8 +22,8 @@
 
             <!-- Page Heading -->
             @isset($header)
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                <header>
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         {{ $header }}
                     </div>
                 </header>

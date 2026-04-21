@@ -1,8 +1,10 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Desarrollo') }}
-        </h2>
+        <div style="background: linear-gradient(135deg, #2731F5 0%, #2731F5 100%); height: 5rem; width: 100%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+            <h2 style="color: white; font-family: 'Anton', sans-serif; font-style: italic; font-size: 55px; letter-spacing: 2px; text-shadow: 0 3px 6px rgba(0,0,0,0.3);">
+                {{ __('EXPLORADOR DE PROYECTOS COLABORATIVOS') }}
+            </h2>
+        </div>
     </x-slot>
 
     <div class="py-12">

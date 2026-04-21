@@ -28,12 +28,12 @@
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-300 bg-transparent hover:text-white focus:outline-none transition ease-in-out duration-150">
-                            <div style="font-family: 'Anton', sans-serif; font-style: italic; font-size: 30px;">
+                            <div style="font-family: 'Anton', sans-serif; font-style: italic; font-size: 25px;">
                                 PERFIL
                             </div>
                             <div class="ms-1">
-                                <svg class="fill-current h-4 w-4" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                <svg class="fill-current h-5 w-5" viewBox="0 0 20 20" fill="white">
+                                    <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
                                 </svg>
                             </div>
                         </button>
@@ -57,8 +57,8 @@
 
             <!-- Hamburger -->
             <div class="-me-2 flex items-center sm:hidden">
-                <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
-                    <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-white hover:bg-gray-700 focus:outline-none transition duration-150 ease-in-out">
+                    <svg class="h-8 w-8" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                         <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                         <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                     </svg>
@@ -68,41 +68,48 @@
     </div>
 
     <!-- Responsive Navigation Menu -->
-    <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden" style="background-color: #1a1a1a;">
-        <div class="pt-2 pb-3 space-y-1">
-            <a href="{{ route('dashboard') }}" style="font-family: 'Anton', sans-serif; font-style: italic; font-size: 30px; text-decoration: none; display: block; padding: 0.5rem 1rem;">
-                <span style="color: #CDFC77;">COMUNIDAD</span> <span style="color: white;">ESTUDIANTIL</span>
-            </a>
-            <a href="#" style="font-family: 'Anton', sans-serif; font-style: italic; font-size: 30px; color: white; display: block; padding: 0.5rem 1rem;">
-                CONECTAR
-            </a>
-            <a href="#" style="font-family: 'Anton', sans-serif; font-style: italic; font-size: 30px; color: white; display: block; padding: 0.5rem 1rem;">
-                PROYECTOS
-            </a>
-            <a href="#" style="font-family: 'Anton', sans-serif; font-style: italic; font-size: 30px; color: white; display: block; padding: 0.5rem 1rem;">
-                NOSOTROS
-            </a>
-        </div>
-
-        <!-- Responsive Settings Options -->
-        <div class="pt-4 pb-1 border-t border-gray-600">
-            <div class="px-4">
-                <div class="font-medium text-base text-white">{{ Auth::user()->name }}</div>
-                <div class="font-medium text-sm text-gray-400">{{ Auth::user()->email }}</div>
+    <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden fixed inset-0 w-full h-full" style="background-color: #1a1a1a; z-index: 50; overflow-y: auto;">
+        <div class="w-full px-4 py-4">
+            <div class="flex justify-between items-center mb-6">
+                <div class="text-xl font-bold text-white">MENÚ</div>
+                <button @click="open = false" class="text-white text-2xl">&times;</button>
+            </div>
+            
+            <div class="space-y-4 w-full">
+                <a href="{{ route('dashboard') }}" class="block w-full text-center py-4" style="font-family: 'Anton', sans-serif; font-style: italic; font-size: 28px; text-decoration: none;">
+                    <span style="color: #CDFC77;">COMUNIDAD</span> <span style="color: white;">ESTUDIANTIL</span>
+                </a>
+                <a href="#" class="block w-full text-center py-4" style="font-family: 'Anton', sans-serif; font-style: italic; font-size: 25px; color: white; text-decoration: none;">
+                    INICIO
+                </a>
+                <a href="#" class="block w-full text-center py-4" style="font-family: 'Anton', sans-serif; font-style: italic; font-size: 25px; color: white; text-decoration: none;">
+                    CONECTAR
+                </a>
+                <a href="#" class="block w-full text-center py-4" style="font-family: 'Anton', sans-serif; font-style: italic; font-size: 25px; color: white; text-decoration: none;">
+                    PROYECTOS
+                </a>
+                <a href="#" class="block w-full text-center py-4" style="font-family: 'Anton', sans-serif; font-style: italic; font-size: 25px; color: white; text-decoration: none;">
+                    NOSOTROS
+                </a>
             </div>
 
-            <div class="mt-3 space-y-1">
-                <x-responsive-nav-link :href="route('profile.edit')">
-                    {{ __('Actualizar Perfil') }}
-                </x-responsive-nav-link>
+            <div class="mt-8 pt-4 border-t border-gray-600 w-full">
+                <div class="text-center mb-4">
+                    <div class="font-medium text-base text-white">{{ Auth::user()->name }}</div>
+                    <div class="font-medium text-sm text-gray-400">{{ Auth::user()->email }}</div>
+                </div>
 
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <x-responsive-nav-link :href="route('logout')"
-                            onclick="event.preventDefault(); this.closest('form').submit();">
-                        {{ __('Cerrar Sesión') }}
-                    </x-responsive-nav-link>
-                </form>
+                <div class="space-y-2 w-full">
+                    <a href="{{ route('profile.edit') }}" class="block w-full text-center py-3 bg-gray-700 rounded-lg text-white">
+                        {{ __('Actualizar Perfil') }}
+                    </a>
+                    <form method="POST" action="{{ route('logout') }}" class="w-full">
+                        @csrf
+                        <button type="submit" class="block w-full text-center py-3 bg-red-600 rounded-lg text-white">
+                            {{ __('Cerrar Sesión') }}
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

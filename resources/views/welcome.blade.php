@@ -228,6 +228,22 @@
                                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                                 @enderror
                             </div>
+                        <!-- NUEVO CAMPO: Carrera -->
+                            <div>
+                                <label for="register-carrera" class="label-input">Carrera</label>
+                                <input 
+                                    id="register-carrera" 
+                                    name="carrera" 
+                                    type="text" 
+                                    required 
+                                    autocomplete="off"
+                                    class="input-field"
+                                    placeholder="ingresar carrera"
+                                >
+                                @error('carrera')
+                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
 
                             <div>
                                 <label for="register-email" class="label-input">Correo Institucional</label>

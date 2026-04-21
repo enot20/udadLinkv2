@@ -33,6 +33,7 @@ class RegisteredUserController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'carnet' => ['required', 'string', 'max:255', 'unique:users'],
+            'carrera' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class, 'ends_with:@ucad.edu.sv'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
@@ -40,6 +41,7 @@ class RegisteredUserController extends Controller
         $user = User::create([
             'name' => $request->name,
             'carnet' => $request->carnet,
+            'carrera' => $request->carrera,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);

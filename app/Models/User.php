@@ -21,6 +21,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'carnet',      // <-- AGREGA ESTO
+        'carrera',     // <-- AGREGA ESTO
         'email',
         'password',
         'google2fa_secret',

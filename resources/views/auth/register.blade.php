@@ -16,6 +16,13 @@
             <x-input-error :messages="$errors->get('carnet')" class="mt-2" />
         </div>
 
+        <!-- Carrera (NUEVO CAMPO) -->
+        <div class="mt-4">
+            <x-input-label for="carrera" :value="__('Carrera')" />
+            <x-text-input id="carrera" class="block mt-1 w-full" type="text" name="carrera" :value="old('carrera')" required autocomplete="carrera" placeholder="Ej: Ingeniería en Sistemas" />
+            <x-input-error :messages="$errors->get('carrera')" class="mt-2" />
+        </div>
+
         <!-- Email Address -->
         <div class="mt-4">
             <x-input-label for="email" :value="__('Email')" />

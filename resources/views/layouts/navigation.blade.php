@@ -3,32 +3,32 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-20">
             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex sm:items-center">
-                <a href="{{ route('dashboard') }}" style="font-family: 'Anton', sans-serif; font-style: italic; font-size: 35px; text-decoration: none;">
+                <a href="{{ route('dashboard') }}" class="responsive-logo" style="font-family: 'Anton', sans-serif; font-style: italic; font-size: 35px; text-decoration: none;">
                     <span style="color: #CDFC77;">COMUNIDAD</span> <span style="color: white;">ESTUDIANTIL</span>
                 </a>
             </div>
             <!-- Navigation Links -->
             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex sm:items-center">
-                <a href="{{ route('dashboard') }}" style="font-family: 'Anton', sans-serif; font-style: italic; font-size: 25px; color: white; text-decoration: none;">
+                <a href="{{ route('dashboard') }}" class="responsive-link" style="font-family: 'Anton', sans-serif; font-style: italic; font-size: 25px; color: white; text-decoration: none;">
                     INICIO
                 </a>
-                <a href="#" style="font-family: 'Anton', sans-serif; font-style: italic; font-size: 25px; color: white; text-decoration: none; margin-left: 2rem;">
+                <a href="#" class="responsive-link" style="font-family: 'Anton', sans-serif; font-style: italic; font-size: 25px; color: white; text-decoration: none; margin-left: 2rem;">
                     CONECTAR
                 </a>
-                <a href="#" style="font-family: 'Anton', sans-serif; font-style: italic; font-size: 25px; color: white; text-decoration: none; margin-left: 2rem;">
+                <a href="#" class="responsive-link" style="font-family: 'Anton', sans-serif; font-style: italic; font-size: 25px; color: white; text-decoration: none; margin-left: 2rem;">
                     PROYECTOS
                 </a>
-                <a href="#" style="font-family: 'Anton', sans-serif; font-style: italic; font-size: 25px; color: white; text-decoration: none; margin-left: 2rem;">
+                <a href="#" class="responsive-link" style="font-family: 'Anton', sans-serif; font-style: italic; font-size: 25px; color: white; text-decoration: none; margin-left: 2rem;">
                     NOSOTROS
                 </a>
             </div>
 
-<!-- Profile Link -->
+            <!-- Profile Link -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-300 bg-transparent hover:text-white focus:outline-none transition ease-in-out duration-150">
-                            <div style="font-family: 'Anton', sans-serif; font-style: italic; font-size: 25px;">
+                            <div class="responsive-profile" style="font-family: 'Anton', sans-serif; font-style: italic; font-size: 25px;">
                                 PERFIL
                             </div>
                             <div class="ms-1">
@@ -76,19 +76,19 @@
             </div>
             
             <div class="space-y-4 w-full">
-                <a href="{{ route('dashboard') }}" class="block w-full text-center py-4" style="font-family: 'Anton', sans-serif; font-style: italic; font-size: 28px; text-decoration: none;">
+                <a href="{{ route('dashboard') }}" class="block w-full text-center py-4 responsive-mobile-logo" style="font-family: 'Anton', sans-serif; font-style: italic; font-size: 28px; text-decoration: none;">
                     <span style="color: #CDFC77;">COMUNIDAD</span> <span style="color: white;">ESTUDIANTIL</span>
                 </a>
-                <a href="#" class="block w-full text-center py-4" style="font-family: 'Anton', sans-serif; font-style: italic; font-size: 25px; color: white; text-decoration: none;">
+                <a href="#" class="block w-full text-center py-4 responsive-mobile-link" style="font-family: 'Anton', sans-serif; font-style: italic; font-size: 25px; color: white; text-decoration: none;">
                     INICIO
                 </a>
-                <a href="#" class="block w-full text-center py-4" style="font-family: 'Anton', sans-serif; font-style: italic; font-size: 25px; color: white; text-decoration: none;">
+                <a href="#" class="block w-full text-center py-4 responsive-mobile-link" style="font-family: 'Anton', sans-serif; font-style: italic; font-size: 25px; color: white; text-decoration: none;">
                     CONECTAR
                 </a>
-                <a href="#" class="block w-full text-center py-4" style="font-family: 'Anton', sans-serif; font-style: italic; font-size: 25px; color: white; text-decoration: none;">
+                <a href="#" class="block w-full text-center py-4 responsive-mobile-link" style="font-family: 'Anton', sans-serif; font-style: italic; font-size: 25px; color: white; text-decoration: none;">
                     PROYECTOS
                 </a>
-                <a href="#" class="block w-full text-center py-4" style="font-family: 'Anton', sans-serif; font-style: italic; font-size: 25px; color: white; text-decoration: none;">
+                <a href="#" class="block w-full text-center py-4 responsive-mobile-link" style="font-family: 'Anton', sans-serif; font-style: italic; font-size: 25px; color: white; text-decoration: none;">
                     NOSOTROS
                 </a>
             </div>
@@ -114,3 +114,13 @@
         </div>
     </div>
 </nav>
+
+<style>
+@media (max-width: 640px) {
+    .responsive-logo { font-size: 24px !important; }
+    .responsive-link { font-size: 18px !important; }
+    .responsive-profile { font-size: 18px !important; }
+    .responsive-mobile-logo { font-size: 24px !important; }
+    .responsive-mobile-link { font-size: 20px !important; }
+}
+</style>

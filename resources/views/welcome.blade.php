@@ -109,16 +109,20 @@
             .login-card {
                 max-width: 100%;
                 border-radius: 16px;
+                padding: 1.5rem;
             }
         }
     </style>
 </head>
 <body style="min-height: 100vh; margin: 0; padding: 0;">
     <!-- Fondo con imagen -->
-    <div style="min-height: 100vh; width: 100%; position: relative; background-image: url('{{ asset('images/login-2.jpg') }}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+    <div class="background-container" style="min-height: 100vh; width: 100%; position: relative; background-image: url('{{ asset('images/login-2.jpg') }}'); background-size: cover; background-position: center center; background-repeat: no-repeat; background-attachment: fixed;">
+        
+        <!-- Overlay oscuro para mejorar legibilidad -->
+        <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.3);"></div>
         
         <!-- Contenido: Login en esquina inferior izquierda -->
-        <div style="position: absolute; bottom: 15%; left: 2rem; max-width: 90vw;">
+        <div class="login-container" style="position: absolute; bottom: 2rem; left: 2rem; max-width: 90vw; z-index: 10;">
             
             <!-- Login Card -->
             <div class="login-card">
@@ -302,6 +306,76 @@
             </div>
         </div>
     </div>
+
+    <style>
+        /* Ajustes responsive para tablets y resoluciones medianas */
+        @media (max-width: 1280px) and (min-width: 769px) {
+            .login-card {
+                max-width: 340px !important;
+                padding: 1.5rem !important;
+            }
+            .login-container {
+                bottom: 1.5rem !important;
+                left: 1.5rem !important;
+            }
+            .tab-btn {
+                padding: 0.6rem 1.2rem !important;
+                font-size: 0.85rem !important;
+            }
+            .input-field {
+                padding: 0.75rem 0.875rem !important;
+                font-size: 0.9rem !important;
+            }
+            .label-input {
+                font-size: 0.8rem !important;
+            }
+            .btn-primary {
+                padding: 0.8rem !important;
+                font-size: 0.9rem !important;
+            }
+        }
+        
+        @media (max-width: 768px) and (min-width: 481px) {
+            .login-card {
+                max-width: 320px !important;
+                padding: 1.25rem !important;
+            }
+            .login-container {
+                bottom: 1rem !important;
+                left: 1rem !important;
+            }
+            .background-container {
+                background-position: center 25% !important;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .login-card {
+                max-width: 100% !important;
+                border-radius: 16px !important;
+                padding: 1.25rem !important;
+            }
+            .login-container {
+                bottom: 0.5rem !important;
+                left: 0.75rem !important;
+                right: 0.75rem !important;
+                max-width: calc(100% - 1.5rem) !important;
+            }
+            .background-container {
+                background-position: center 20% !important;
+            }
+            .tab-btn {
+                padding: 0.5rem 1rem !important;
+                font-size: 0.8rem !important;
+            }
+        }
+        
+        @media (min-width: 1920px) {
+            .background-container {
+                background-size: cover !important;
+            }
+        }
+    </style>
 
     <script>
         function showTab(tab) {

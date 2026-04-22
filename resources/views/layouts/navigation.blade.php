@@ -18,7 +18,7 @@
                 <a href="#" class="responsive-link" style="font-family: 'Anton', sans-serif; font-style: italic; font-size: 25px; color: white; text-decoration: none; margin-left: 2rem;">
                     PROYECTOS
                 </a>
-                <a href="#" class="responsive-link" style="font-family: 'Anton', sans-serif; font-style: italic; font-size: 25px; color: white; text-decoration: none; margin-left: 2rem;">
+                <a href="{{ route('nosotros') }}" class="responsive-link" style="font-family: 'Anton', sans-serif; font-style: italic; font-size: 25px; color: white; text-decoration: none; margin-left: 2rem;">
                     NOSOTROS
                 </a>
             </div>
@@ -79,7 +79,7 @@
                 <a href="{{ route('dashboard') }}" class="block w-full text-center py-4 responsive-mobile-logo" style="font-family: 'Anton', sans-serif; font-style: italic; font-size: 28px; text-decoration: none;">
                     <span style="color: #CDFC77;">COMUNIDAD</span> <span style="color: white;">ESTUDIANTIL</span>
                 </a>
-                <a href="#" class="block w-full text-center py-4 responsive-mobile-link" style="font-family: 'Anton', sans-serif; font-style: italic; font-size: 25px; color: white; text-decoration: none;">
+                <a href="{{ route('dashboard') }}" class="block w-full text-center py-4 responsive-mobile-link" style="font-family: 'Anton', sans-serif; font-style: italic; font-size: 25px; color: white; text-decoration: none;">
                     INICIO
                 </a>
                 <a href="#" class="block w-full text-center py-4 responsive-mobile-link" style="font-family: 'Anton', sans-serif; font-style: italic; font-size: 25px; color: white; text-decoration: none;">
@@ -88,7 +88,7 @@
                 <a href="#" class="block w-full text-center py-4 responsive-mobile-link" style="font-family: 'Anton', sans-serif; font-style: italic; font-size: 25px; color: white; text-decoration: none;">
                     PROYECTOS
                 </a>
-                <a href="#" class="block w-full text-center py-4 responsive-mobile-link" style="font-family: 'Anton', sans-serif; font-style: italic; font-size: 25px; color: white; text-decoration: none;">
+                <a href="{{ route('nosotros') }}" class="block w-full text-center py-4 responsive-mobile-link" style="font-family: 'Anton', sans-serif; font-style: italic; font-size: 25px; color: white; text-decoration: none;">
                     NOSOTROS
                 </a>
             </div>

@@ -60,6 +60,11 @@ Route::middleware(['auth', '2fa'])->group(function () {
         return view('dashboard');
     })->middleware(['verified'])->name('dashboard');
 
+    // Nosotros
+    Route::get('/nosotros', function () {
+        return view('nosotros');
+    })->name('nosotros');
+
     // Perfil de Usuario
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

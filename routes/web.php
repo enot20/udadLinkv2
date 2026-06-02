@@ -65,6 +65,11 @@ Route::middleware(['auth', '2fa'])->group(function () {
         return view('nosotros');
     })->name('nosotros');
 
+    // Conectar
+    Route::get('/conectar', function () {
+    return view('conectar');
+    })->name('conectar');
+
     // Perfil de Usuario
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

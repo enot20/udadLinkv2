@@ -12,7 +12,7 @@
                 <div class="grid md:grid-cols-2 gap-10 items-center">
                     <div>
                         <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold uppercase mb-5 leading-tight">
-                            Conecta con estudiantes de todo el país
+                            Conecta con estudiantes de otras carreras y forma equipos multidisciplinarios
                         </h1>
                         <p class="text-lg sm:text-xl mb-8 text-white/90">
                             Encuentra compañeros para proyectos, investigaciones, emprendimientos y actividades académicas.

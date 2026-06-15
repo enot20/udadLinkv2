@@ -65,6 +65,11 @@ Route::middleware(['auth', '2fa'])->group(function () {
         return view('nosotros');
     })->name('nosotros');
 
+    // Proyectos
+    Route::get('/proyectos', function () {
+        return view('proyectos');
+    })->name('proyectos');
+
     // Conectar
     Route::get('/conectar', function () {
     return view('conectar');

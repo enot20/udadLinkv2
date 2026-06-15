@@ -13,7 +13,7 @@
                     INICIO
                 </a>
                 
-                <a href="#" class="responsive-link" style="font-family: 'Anton', sans-serif; font-style: italic; font-size: 25px; color: white; text-decoration: none; margin-left: 2rem;">
+                <a href="{{ route('proyectos') }}" class="responsive-link" style="font-family: 'Anton', sans-serif; font-style: italic; font-size: 25px; color: white; text-decoration: none; margin-left: 2rem;">
                     PROYECTOS
                 </a>
                 <a href="{{ route('conectar') }}" class="responsive-link" style="font-family: 'Anton', sans-serif; font-style: italic; font-size: 25px; color: white; text-decoration: none; margin-left: 2rem;">

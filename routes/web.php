@@ -1,8 +1,8 @@
-
 <?php
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TwoFAController;
+use App\Http\Controllers\ComunidadController;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -33,17 +33,10 @@ require __DIR__.'/auth.php';
 
 // ==========================================================
 // GRUPO 1: Rutas de VALIDACIÓN 2FA (Solo requieren 'auth')
-// Importante: NO llevan el middleware '2fa' para evitar bucles.
-// Aquí el usuario llega cuando el middleware lo redirige.
 // ==========================================================
 Route::middleware('auth')->group(function () {
-    // Mostrar formulario de desafío
     Route::get('/2fa/validate', [TwoFAController::class, 'validateForm'])->name('2fa.validate');
-
-    // Procesar el código ingresado
     Route::post('/2fa/validate', [TwoFAController::class, 'validateCode'])->name('2fa.storeCode');
-
-    // Gestión 2FA - enable requiere sesión normal, disable requiere password
     Route::get('/2fa/enable', [TwoFAController::class, 'enable'])->name('2fa.enable');
     Route::post('/2fa/store', [TwoFAController::class, 'store'])->name('2fa.store');
     Route::post('/2fa/disable', [TwoFAController::class, 'disable'])->name('2fa.disable');
@@ -51,13 +44,13 @@ Route::middleware('auth')->group(function () {
 
 // ==========================================================
 // GRUPO 2: Rutas PROTEGIDAS CON 2FA (Requieren 'auth' + '2fa')
-// El middleware '2fa' verificará si falta validar y redirigirá al Grupo 1.
 // ==========================================================
 Route::middleware(['auth', '2fa'])->group(function () {
 
     // Dashboard Principal
     Route::get('/dashboard', function () {
-        return view('dashboard');
+        $usuarios = User::with('proyectos')->latest()->get();
+        return view('dashboard', compact('usuarios'));
     })->middleware(['verified'])->name('dashboard');
 
     // Nosotros
@@ -70,13 +63,15 @@ Route::middleware(['auth', '2fa'])->group(function () {
         return view('proyectos');
     })->name('proyectos');
 
-    // Conectar
-    Route::get('/conectar', function () {
-    return view('conectar');
-    })->name('conectar');
+    // Conectar (solo una definición, usando el controlador)
+    Route::get('/conectar', [ComunidadController::class, 'index'])->name('conectar');
 
     // Perfil de Usuario
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::post('/profile/avatar', [ProfileController::class, 'updateAvatar'])->name('profile.avatar');
+    Route::post('/profile/subir-archivos', [ProfileController::class, 'subirArchivo'])
+        ->middleware(['throttle:10,1'])
+        ->name('archivos.store');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });

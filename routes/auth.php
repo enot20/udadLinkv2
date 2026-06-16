@@ -78,6 +78,15 @@ Route::middleware('auth')->group(function () {
         ->middleware('throttle:6,1') // limita a 6 intentos por minuto
         ->name('verification.send');
 
+
+        
+    // Ruta para procesar la subida del archivo en el controlador
+    Route::post('profile/subir-archivos', [ProfileController::class, 'subirArchivo'])
+        ->middleware(['auth', 'throttle:10,1']) // Protegido y con límite de 10 subidas por minuto
+        ->name('archivos.store');
+
+
+
     // Confirmación de contraseña: formulario
     Route::get('confirm-password', [ConfirmablePasswordController::class, 'show'])
         ->name('password.confirm');

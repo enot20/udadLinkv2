@@ -12,17 +12,16 @@
                 <a href="{{ route('dashboard') }}" class="responsive-link" style="font-family: 'Anton', sans-serif; font-style: italic; font-size: 25px; color: white; text-decoration: none;">
                     INICIO
                 </a>
+                 <a href="{{ route('conectar') }}" class="responsive-link" style="font-family: 'Anton', sans-serif; font-style: italic; font-size: 25px; color: white; text-decoration: none; margin-left: 2rem;">
+                    CONECTAR
+                </a>
                 
                 <a href="{{ route('proyectos') }}" class="responsive-link" style="font-family: 'Anton', sans-serif; font-style: italic; font-size: 25px; color: white; text-decoration: none; margin-left: 2rem;">
                     PROYECTOS
                 </a>
-                <a href="{{ route('conectar') }}" class="responsive-link" style="font-family: 'Anton', sans-serif; font-style: italic; font-size: 25px; color: white; text-decoration: none; margin-left: 2rem;">
-                    CONECTAR
-                </a>
                 <a href="{{ route('nosotros') }}" class="responsive-link" style="font-family: 'Anton', sans-serif; font-style: italic; font-size: 25px; color: white; text-decoration: none; margin-left: 2rem;">
                     NOSOTROS
                 </a>
-                
             </div>
 
             <!-- Profile Link -->
@@ -84,15 +83,17 @@
                 <a href="{{ route('dashboard') }}" class="block w-full text-center py-4 responsive-mobile-link" style="font-family: 'Anton', sans-serif; font-style: italic; font-size: 25px; color: white; text-decoration: none;">
                     INICIO
                 </a>
+                <a href="{{ route('conectar') }}" 
+                class="block w-full text-center py-4 responsive-mobile-link" 
+                style="font-family: 'Anton', sans-serif; font-style: italic; font-size: 25px; color: white; text-decoration: none;">
+                    CONECTAR
+                </a>
                 
-                <a href="#" class="block w-full text-center py-4 responsive-mobile-link" style="font-family: 'Anton', sans-serif; font-style: italic; font-size: 25px; color: white; text-decoration: none;">
+                <a href="{{ route('proyectos') }}" class="responsive-link" style="font-family: 'Anton', sans-serif; font-style: italic; font-size: 25px; color: white; text-decoration: none; margin-left: 2rem;">
                     PROYECTOS
                 </a>
                 <a href="{{ route('nosotros') }}" class="block w-full text-center py-4 responsive-mobile-link" style="font-family: 'Anton', sans-serif; font-style: italic; font-size: 25px; color: white; text-decoration: none;">
                     NOSOTROS
-                </a>
-                 <a href="{{ route('conectar') }}" class="block w-full text-center py-4 responsive-mobile-link" style="font-family: 'Anton', sans-serif; font-style: italic; font-size: 25px; color: white; text-decoration: none;">
-                    CONECTAR
                 </a>
             </div>
 

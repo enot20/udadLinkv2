@@ -1,168 +1,134 @@
 <x-app-layout>
     <div class="min-h-screen bg-[#f5f5f0]">
-        <style>
-            .verde-neon{ color:#D8FF1E; }
-            .bg-neon{ background:#D8FF1E; }
-            .bg-hero{ background: linear-gradient(135deg,#001BFF,#000066); }
-        </style>
+         <style>
+        .bg-hero {
+            background: linear-gradient(135deg, #001BFF, #000066);
+            background-size: cover;
+            background-position: center;
+        }
+        .hero-container {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+            min-height: 80vh; /* más alto para cubrir */
+            padding: 4rem 2rem;
+        }
+        .hero-text h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            color: #fff;
+            text-shadow: 0 0 12px rgba(0,0,0,0.5);
+        }
+        .hero-text p {
+            font-size: 1.4rem;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 2rem;
+        }
+        .hero-text a {
+            background: #D8FF1E;
+            color: #000;
+            padding: 1rem 2rem;
+            font-weight: 700;
+            border-radius: 8px;
+            display: inline-block;
+            transition: transform 0.2s ease;
+            z-index: 50;
+            position: relative;
+        }
+        .hero-text a:hover {
+            transform: scale(1.05);
+        }
 
-        <!-- HERO -->
-        <section class="bg-hero text-white min-h-[70vh] flex items-center">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
-                <div class="grid md:grid-cols-2 gap-10 items-center">
-                    <div>
-                        <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold uppercase mb-5 leading-tight">
-                            Conecta con estudiantes de otras carreras y forma equipos multidisciplinarios
-                        </h1>
-                        <p class="text-lg sm:text-xl mb-8 text-white/90">
-                            Encuentra compañeros para proyectos, investigaciones, emprendimientos y actividades académicas.
-                        </p>
-                        <a href="#comunidad" class="bg-neon text-black px-7 py-4 font-bold rounded-lg hover:scale-[1.02] transition-transform inline-block">
-                            Explorar Comunidad
-                        </a>
-                    </div>
+        /* 🔧 Ajustes para móvil */
+        @media (max-width: 640px) {
+            .hero-container {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+                padding: 2rem 1rem;
+                min-height: 100vh; /* ocupa toda la pantalla */
+            }
+            .hero-text h1 {
+                font-size: 2.4rem;
+                line-height: 1.2;
+            }
+            .hero-text p {
+                font-size: 1rem;
+                margin-bottom: 1.5rem;
+            }
+            .hero-text a {
+                width: 100%;
+                font-size: 1.1rem;
+                padding: 1rem;
+            }
+            .hero-image img {
+                width: 80%;
+                margin: 0 auto;
+                display: block;
+            }
+        }
+    </style>
 
-                    <div class="flex justify-center">
-                        <img
-                            src="images/chica-banner.png"
-                            alt="Estudiantes"
-                            class="rounded-xl shadow-2xl w-full max-w-md"
-                            loading="lazy"
-                        >
-                    </div>
+        <section class="bg-hero text-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 w-full hero-container">
+                <div class="hero-text">
+                    <h1>Conecta con estudiantes de todo el país</h1>
+                    <p>Encuentra compañeros para proyectos, investigaciones, emprendimientos y actividades académicas.</p>
+                    <a href="#comunidad">Explorar Comunidad</a>
+                </div>
+
+                <div class="hero-image">
+                    <img src="/images/chica-banner.png" alt="Estudiantes" loading="lazy">
                 </div>
             </div>
         </section>
 
-        <!-- ÁREAS DE INTERÉS -->
-        <section class="bg-neon text-black py-4 font-bold text-center text-base sm:text-xl">
-            Ingeniería +
-            Diseño +
-            Negocios +
-            Ciencia +
-            Tecnología +
-            Innovación +
-            Startups
+        <section style="background-color:#D8FF1E; color:#000; padding:1rem 0; font-weight:700; text-align:center; font-size:1.1rem; width:100%; display:block; clear:both;">
+            Ingeniería + Diseño + Negocios + Ciencia + Tecnología + Innovación + Startups
         </section>
 
-       <!-- COMUNIDAD -->
-<section id="comunidad" class="max-w-7xl mx-auto py-14 px-4 sm:px-6 lg:px-8">
 
-    <h2 class="text-3xl sm:text-4xl font-bold mb-10 text-gray-900">
-        Miembros Destacados
-    </h2>
+       <section id="comunidad" class="max-w-7xl mx-auto py-14 px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl sm:text-4xl font-bold mb-10 text-gray-900 text-center">
+                Miembros Destacados
+            </h2>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
-
-        <!-- CARD 1 -->
-        <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-all duration-300">
-
-            <img
-                src="https://images.unsplash.com/photo-1494790108377-be9c29b29330"
-                class="w-full h-56 object-cover"
-                alt="Ana Martínez">
-
-            <div class="p-6">
-
-                <h3 class="text-xl font-bold text-gray-900 mb-3">
-                    Ana Martínez
-                </h3>
-
-                <p class="text-gray-600 mb-6">
-                    Estudiante de Ingeniería de Software especializada en desarrollo web y aplicaciones móviles.
-                </p>
-
-                <a href="#" class="text-blue-600 hover:underline font-medium">
-                    Ver perfil
-                </a>
-
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+                @foreach($miembros as $miembro)
+                <div style="background:#fff; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.15); overflow:hidden;">
+                    <img src="{{ $miembro->foto_perfil ? asset('storage/'.$miembro->foto_perfil) : '/images/default-avatar.png' }}"
+                        style="width:100%; height:250px; object-fit:cover;"
+                        alt="{{ $miembro->name }}">
+                    <div style="padding:1rem;">
+                        <h3 style="font-size:1.2rem; font-weight:bold; margin-bottom:0.5rem;">{{ $miembro->name }}</h3>
+                        <p style="color:#555; margin-bottom:0.5rem;">Carrera: {{ $miembro->carrera ?? 'No especificada' }}</p>
+                        <p style="color:#555; margin-bottom:0.5rem;">Carnet: {{ $miembro->carnet }}</p>
+                        <p style="color:#555; margin-bottom:1rem;">Email: {{ $miembro->email }}</p>
+                        <!-- ⭐ Bloque de estrellas con texto -->
+                    <div style="color:#FFD700; font-size:1.4rem; margin-bottom:0.5rem;">
+                        ★ ★ ★ ★ ★
+                    </div>
+                    <p style="font-size:0.9rem; color:#333; margin-bottom:1rem; font-weight:600;">
+                        Califícame
+                    </p>
+                        <a href="{{ route('profile.edit', $miembro->id) }}" style="color:#1E40AF; font-weight:600; text-decoration:none;">
+                            Ver perfil
+                        </a>
+                    </div>
+                </div>
+                @endforeach
             </div>
 
-        </div>
+        </section>
 
-        <!-- CARD 2 -->
-        <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-all duration-300">
 
-            <img
-                src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e"
-                class="w-full h-56 object-cover"
-                alt="Carlos López">
 
-            <div class="p-6">
 
-                <h3 class="text-xl font-bold text-gray-900 mb-3">
-                    Carlos López
-                </h3>
-
-                <p class="text-gray-600 mb-6">
-                    Diseñador UX/UI enfocado en experiencias digitales intuitivas y accesibles.
-                </p>
-
-                <a href="#" class="text-blue-600 hover:underline font-medium">
-                    Ver perfil
-                </a>
-
-            </div>
-
-        </div>
-
-        <!-- CARD 3 -->
-        <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-all duration-300">
-
-            <img
-                src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7"
-                class="w-full h-56 object-cover"
-                alt="Sofía Ramírez">
-
-            <div class="p-6">
-
-                <h3 class="text-xl font-bold text-gray-900 mb-3">
-                    Sofía Ramírez
-                </h3>
-
-                <p class="text-gray-600 mb-6">
-                    Especialista en marketing digital y creación de estrategias para startups.
-                </p>
-
-                <a href="#" class="text-blue-600 hover:underline font-medium">
-                    Ver perfil
-                </a>
-
-            </div>
-
-        </div>
-
-        <!-- CARD 4 -->
-        <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-all duration-300">
-
-            <img
-                src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d"
-                class="w-full h-56 object-cover"
-                alt="José Hernández">
-
-            <div class="p-6">
-
-                <h3 class="text-xl font-bold text-gray-900 mb-3">
-                    José Hernández
-                </h3>
-
-                <p class="text-gray-600 mb-6">
-                    Analista de datos enfocado en inteligencia artificial y ciencia de datos.
-                </p>
-
-                <a href="#" class="text-blue-600 hover:underline font-medium">
-                    Ver perfil
-                </a>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-        <!-- FOOTER (simple, para acoplar con las demás páginas) -->
         <footer class="bg-zinc-950 text-white border-t border-zinc-800 py-10">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                 <h2 class="text-3xl font-bold mb-2">
@@ -174,4 +140,3 @@
         </footer>
     </div>
 </x-app-layout>
-

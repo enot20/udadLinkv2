@@ -8,24 +8,25 @@
         <title>{{ config('app.name', 'Laravel') }}</title>
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="{{ asset('fonts/figtree.css') }}">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="preconnect" href="https://fonts.bunny.net">
+        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+        
+        <!-- Fuente Anton Personalizada -->
         <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
 
-        <!-- Scripts -->
+        <!-- Scripts & Styles (Vite) -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans antialiased">
+    <body class="font-sans antialiased bg-[#f5f5f0]">
         <div class="min-h-screen bg-gray-100">
+            
+            {{-- AQUÍ ESTÁ LA CLAVE: Incluimos la navegación --}}
             @include('layouts.navigation')
 
-            <!-- Page Heading -->
+            <!-- Page Heading (Opcional, si usas $header slot) -->
             @isset($header)
-                <header>
-                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        
+                <header class="bg-white shadow">
+                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                         {{ $header }}
                     </div>
                 </header>

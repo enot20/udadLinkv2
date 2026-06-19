@@ -445,19 +445,24 @@
     </div>
 </div>
 
-<!-- ELECCIÓN DEL EDITOR -->
+<!-- PROYECTO DESTACADO -->
 <section class="ce-editor">
     <div class="ce-editor-inner">
         <div class="ce-editor-text">
-            <div class="ce-editor-label">Destacado</div>
-            <div class="ce-editor-title">Elección<br>del Editor</div>
+            <div class="ce-editor-title">
+                Jóvenes que Inspiran:<br>
+                Liderazgo y Comunidad
+            </div>
             <p class="ce-editor-desc">
-                Nuestra selección curada de artículos y proyectos imprescindibles.
+                Estudiantes de diversas facultades colaboran en iniciativas que fortalecen el liderazgo,
+                el trabajo en equipo y el compromiso social, generando un impacto positivo dentro y fuera
+                de la comunidad universitaria.
             </p>
         </div>
+
         <img
-            src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80"
-            alt="Elección del editor"
+            src="images/alumnos1.jpeg"
+            alt="Estudiantes participando en proyecto comunitario"
             class="ce-editor-img"
             loading="lazy">
     </div>

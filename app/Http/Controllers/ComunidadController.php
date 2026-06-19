@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Auth;
+
 use App\Models\Documento; 
 
 class ComunidadController extends Controller
@@ -21,6 +22,7 @@ class ComunidadController extends Controller
         return view('dashboard', compact('usuarios', 'mensajes', 'documentos'));
     }
    
+
     /**
      * Módulo 2: Sección Conectar / Miembros (Ruta: /conectar)
      */

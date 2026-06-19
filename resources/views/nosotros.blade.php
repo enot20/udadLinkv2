@@ -8,7 +8,7 @@
                     NUESTRA MISIÓN
                 </h2>
                 <div class="w-full overflow-hidden rounded-xl shadow-lg">
-                    <img src="{{ asset('images/login-2.jpg') }}" alt="Misión" class="w-full h-auto object-cover max-h-[500px]">
+                    <img src="{{ asset('images/UcadLink.png') }}" alt="Misión" class="w-full h-auto object-cover max-h-[600px]">
                 </div>
             </section>
 
@@ -26,7 +26,7 @@
                     
                     <!-- Imagen -->
                     <div class="flex items-center justify-center">
-                        <img src="{{ asset('images/logo.jpeg') }}" 
+                        <img src="{{ asset('images/EstudiantesComunicaciones.png') }}" 
                              alt="Impacto" 
                              class="w-full h-80 object-cover rounded-lg shadow-sm">
                     </div>
@@ -61,7 +61,7 @@
 
                     <!-- Imagen -->
                     <div class="flex items-center justify-center">
-                        <img src="{{ asset('images/login-2.jpg') }}" 
+                        <img src="{{ asset('images/EstudiantesDeportes.png') }}" 
                              alt="Valores" 
                              class="w-full h-80 object-cover rounded-lg shadow-sm">
                     </div>

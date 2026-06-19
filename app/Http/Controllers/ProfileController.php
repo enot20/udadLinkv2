@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
+use App\Models\Documento; // ✅ Importación correcta, arriba de la clase
+
+
 
 class ProfileController extends Controller
 {
@@ -50,23 +53,22 @@ class ProfileController extends Controller
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
-
     /**
      * Subir archivos generales del perfil.
      */
     public function subirArchivo(Request $request): RedirectResponse
     {
         $request->validate([
-            'archivo' => ['required', 'file', 'max:2048'], // máximo 2MB
+            'archivo' => ['required', 'file', 'max:2048'],
         ]);
 
-        // Guardar archivo en storage/app/public/archivos/
         $path = $request->file('archivo')->store('archivos', 'public');
 
-        // Si quieres guardar la ruta en la BD:
-        // $user = $request->user();
-        // $user->archivo_path = $path;
-        // $user->save();
+        Documento::create([
+            'user_id' => $request->user()->id,
+            'ruta'    => $path,
+            'tipo'    => $request->file('archivo')->getClientOriginalExtension(),
+        ]);
 
         return Redirect::route('profile.edit')->with('status', 'Archivo subido con éxito: '.$path);
     }

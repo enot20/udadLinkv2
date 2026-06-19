@@ -20,6 +20,7 @@
         .font-impacto {
             font-family: 'Oswald', 'Arial Black', sans-serif !important;
         }
+
         /* Corrección mágica para asegurar que el iframe ocupe todo el espacio real en pantallas táctiles */
         .visor-fijo {
             height: calc(100vh - 70px) !important;
@@ -35,7 +36,10 @@
             
             {{-- BARRA LATERAL IZQUIERDA (Se oculta en móvil SOLO cuando el visor de PDF está activo para que no estorbe abajo) --}}
             <aside x-show="!verDoc" class="w-full lg:w-[340px] p-8 flex flex-col items-center lg:items-stretch space-y-8 shrink-0" style="background-color: #111111 !important; min-width: 340px !important;">
-                
+
+    </style>
+
+        
                 {{-- Foto de Perfil con el Aro Azul Eléctrico --}}
                 <div class="flex justify-center w-full pt-4">
                     <div class="w-48 h-48 rounded-full overflow-hidden p-1.5 flex items-center justify-center shrink-0 shadow-2xl" style="background-color: #0014ff !important;">
@@ -50,6 +54,7 @@
                 </div>
 
                 {{-- Nombre del Usuario --}}
+
                 <div class="text-center lg:text-left space-y-2 w-full px-2">
                     <h2 class="font-impacto text-4xl font-bold text-[#CDFC77] uppercase tracking-tight leading-none break-words">
                         @php
@@ -65,6 +70,7 @@
                         {{ Auth::user()->carrera ?? 'Ingeniería En Ciencias De La Computación' }}
                     </p>
                 </div>
+
 
                 {{-- Botón Editar Perfil --}}
                 <div class="w-full px-2 pt-4">
@@ -174,10 +180,57 @@
                                 </div>
                             </object>
                         </template>
+
+
                     </div>
-                </div>
+                </section>
 
             </div>
+
+                {{-- SECCIÓN: HABILIDADES (Planas, rectangulares y neón) --}}
+                <section>
+                    <h3 class="font-impacto text-3xl font-bold text-gray-900 uppercase tracking-tight mb-6 border-b border-gray-200 pb-2">Habilidades</h3>
+                    <div class="flex flex-wrap gap-2" style="display: flex !important;">
+                        @php
+                            $habilidadesUsuario = Auth::user()->habilidades ?? ['Diseño UI', 'React', 'Figma', 'Colaboración', 'Javascript'];
+                        @endphp
+                        @foreach($habilidadesUsuario as $habilidad)
+                            <span class="font-impacto text-black text-xs font-bold px-4 py-2.5 uppercase tracking-widest shadow-sm" style="background-color: #CDFC77 !important; color: #000000 !important; display: inline-block !important;">
+                                {{ $habilidad }}
+                            </span>
+                        @endforeach
+                    </div>
+                </section>
+
+                {{-- SECCIÓN: MENSAJES RECIENTES (Líneas limpias y marcas de tiempo perfectas) --}}
+                <section>
+                    <h3 class="font-impacto text-3xl font-bold text-gray-900 uppercase tracking-tight mb-6 border-b border-gray-200 pb-2">Mensajes Recientes</h3>
+                    <div class="space-y-0 font-sans">
+                        @forelse($mensajes ?? [] as $msg)
+                            <div class="border-b border-gray-200 py-4 flex justify-between items-start gap-4">
+                                <div class="text-xs">
+                                    <p class="m-0"><span class="font-bold text-gray-900">{{ $msg->remitente }}:</span> <span class="text-gray-700 ml-1">{{ $msg->contenido }}</span></p>
+                                </div>
+                                <span class="text-[10px] text-gray-400 font-bold whitespace-nowrap">{{ $msg->created_at->format('g:i A') }}</span>
+                            </div>
+                        @empty
+                            <div class="border-b border-gray-200 py-4 flex justify-between items-baseline">
+                                <p class="text-xs m-0"><span class="font-bold text-gray-900">Carlos Ruiz:</span><span class="text-gray-700 ml-1">¿Te interesa colaborar en el hackathon?</span></p>
+                                <span class="text-[10px] text-gray-400 font-bold">2:32 AM</span>
+                            </div>
+                            <div class="border-b border-gray-200 py-4 flex justify-between items-baseline">
+                                <p class="text-xs m-0"><span class="font-bold text-gray-900">Equipo de Diseño:</span><span class="text-gray-700 ml-1">Actualización del proyecto 'Campus'</span></p>
+                                <span class="text-[10px] text-gray-400 font-bold">2:33 AM</span>
+                            </div>
+                            <div class="border-b border-gray-200 py-4 flex justify-between items-baseline">
+                                <p class="text-xs m-0"><span class="font-bold text-gray-900">Carlos Ruiz:</span><span class="text-gray-700 ml-1">Buenas comunidades y compartir el url</span></p>
+                                <span class="text-[10px] text-gray-400 font-bold">3:36 PM</span>
+                            </div>
+                        @endforelse
+                    </div>
+                </section>
+            </main>
+
         </div>
     </div>
 

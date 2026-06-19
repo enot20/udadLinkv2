@@ -99,7 +99,4 @@ Route::get('/conectar', 'App\Http\Controllers\ComunidadController@conectar')
 
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-
-    //Route::get('/documentos/{id}', [App\Http\Controllers\DocumentoController::class, 'show'])->name('documentos.show');
-
 });

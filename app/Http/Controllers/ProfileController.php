@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use App\Models\Documento; // ✅ Importación correcta, arriba de la clase
-
+use App\Models\Categoria; 
 
 
 class ProfileController extends Controller
@@ -19,11 +19,15 @@ class ProfileController extends Controller
      * Mostrar el formulario de perfil del usuario.
      */
     public function edit(Request $request): View
-    {
-        return view('profile.edit', [
-            'user' => $request->user(),
-        ]);
-    }
+{
+    $user = $request->user();
+    $categorias = Categoria::all(); // 👈 traemos todas las categorías
+
+    return view('profile.edit', [
+        'user' => $user,
+        'categorias' => $categorias, // 👈 pasamos a la vista
+    ]);
+}
 
     /**
      * Actualizar la información del perfil (texto + imagen).
@@ -53,25 +57,34 @@ class ProfileController extends Controller
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
-    /**
-     * Subir archivos generales del perfil.
-     */
-    public function subirArchivo(Request $request): RedirectResponse
-    {
-        $request->validate([
-            'archivo' => ['required', 'file', 'max:2048'],
-        ]);
+  /**
+ * Subir archivos generales del perfil.
+ */
+public function subirArchivo(Request $request): RedirectResponse
+{
+    $request->validate([
+        'nombre_archivo' => ['required', 'string', 'max:255'], 
+        'archivo'        => ['required', 'file', 'max:10240'], 
+        'categoria_id'   => ['required', 'exists:categorias,id'],
+        'descripcion'    => ['required', 'string', 'max:1000'], 
+    ]);
 
-        $path = $request->file('archivo')->store('archivos', 'public');
+    // Guardar archivo físico
+    $path = $request->file('archivo')->store('archivos', 'public');
 
-        Documento::create([
-            'user_id' => $request->user()->id,
-            'ruta'    => $path,
-            'tipo'    => $request->file('archivo')->getClientOriginalExtension(),
-        ]);
+    // Crear registro en DB
+    Documento::create([
+        'user_id'      => $request->user()->id,
+        'ruta'         => $path,
+        'tipo'         => $request->file('archivo')->getClientOriginalExtension(),
+        'categoria_id' => $request->categoria_id,
+        'descripcion'  => $request->descripcion,
+    ]);
 
-        return Redirect::route('profile.edit')->with('status', 'Archivo subido con éxito: '.$path);
-    }
+    return Redirect::route('profile.edit')
+        ->with('status', 'Archivo subido con éxito: '.$path);
+}
+
 
     /**
      * Eliminar la cuenta del usuario.

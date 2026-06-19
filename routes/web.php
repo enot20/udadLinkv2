@@ -5,6 +5,7 @@ use App\Http\Controllers\TwoFAController;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DocumentoController;
 
 // Ruta de inicio
 Route::get('/', function () {
@@ -74,9 +75,8 @@ Route::get('/conectar', 'App\Http\Controllers\ComunidadController@conectar')
 
 
     // Proyectos
-    Route::get('/proyectos', function () {
-        return view('proyectos');
-    })->name('proyectos');
+   Route::get('/proyectos', [DocumentoController::class, 'index'])->name('proyectos');
+
 
     // Conectar
     Route::get('/conectar', function () {
@@ -98,5 +98,8 @@ Route::get('/conectar', 'App\Http\Controllers\ComunidadController@conectar')
     ->name('archivos.store');
 
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/proyectos', [DocumentoController::class, 'index'])->name('proyectos');
+Route::get('/documentos/{id}', [DocumentoController::class, 'show'])->name('documentos.show');
 
 });

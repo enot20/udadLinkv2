@@ -2,23 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Documento;
 
 class DocumentoController extends Controller
 {
-    public function show($id)
-{
-    $documento = \App\Models\Documento::findOrFail($id);
+    public function index()
+    {
+        // Trae todos los documentos de todos los usuarios con su categoría
+        $documentos = Documento::with(['user', 'categoria'])->get();
 
-    // Si el archivo existe en storage, redirige directamente al archivo
-    if ($documento->ruta && file_exists(storage_path('app/public/' . $documento->ruta))) {
-        return response()->file(storage_path('app/public/' . $documento->ruta));
+        // Renderiza la vista proyectos.blade.php con todos los documentos
+        return view('proyectos', compact('documentos'));
     }
 
-    // Si no existe, muestra la vista con mensaje
-   return view('show', compact('documento'));
+    public function show($id)
+    {
+        $documento = Documento::findOrFail($id);
 
-}
+        if ($documento->ruta && file_exists(storage_path('app/public/' . $documento->ruta))) {
+            return response()->file(storage_path('app/public/' . $documento->ruta));
+        }
 
-
+        return view('documentos.show', compact('documento'));
+    }
 }

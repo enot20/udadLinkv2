@@ -1,4 +1,4 @@
-    <x-app-layout>
+<x-app-layout>
 
     <style>
         /* ── Reset base ── */
@@ -75,11 +75,11 @@
         }
 
         /* ── Grid ── */
-        .frame-grid-wrap { max-width:1200px; margin:0 auto; padding:2.5rem 1.5rem 4rem; }
+        .frame-grid-wrap { max-width:1200px; margin:0 auto; padding:4rem 1.5rem 5rem; }
         .frame-grid {
             display:grid;
             grid-template-columns: repeat(auto-fill, minmax(300px,1fr));
-            gap:1.25rem;
+            gap:1.75rem;
         }
 
         /* ── Card ── */
@@ -138,6 +138,7 @@
             padding:.8rem; border-radius:.75rem;
             cursor:pointer; text-transform:uppercase; letter-spacing:.05em;
             transition: background .2s, color .2s, border-color .2s;
+            text-align: center; text-decoration: none; display: block;
         }
         .frame-btn:hover { background:#CDFC77; color:#000; border-color:#CDFC77; }
 
@@ -225,118 +226,37 @@
             </div>
         </div>
 
-        {{-- PROYECTOS --}}
+        {{-- CONTENEDOR GRID: Corregido el espaciado superior respecto a los filtros sticky --}}
         <div class="frame-grid-wrap">
-
-            @php
-            $proyectos = [
-            [
-                    'titulo'  => 'Desarrollo de Sitio Web para Emprendimiento Local',
-                    'desc'    => 'Diseño y desarrollo de un sitio web para promocionar los productos y servicios de un emprendimiento de la comunidad.',
-                    'tags'    => ['Ingeniería','Desarrollo Web','Tecnología'],
-                    'miembros'=> 4,
-                    'slots'   => 3,
-                    'estado'  => 'Activo',
-                    'emoji'   => '💻',
-                ],
-                [
-                    'titulo'  => 'Campaña de Comunicación Institucional',
-                    'desc'    => 'Creación de contenido para redes sociales, diseño gráfico y estrategia digital para fortalecer la imagen de una organización.',
-                    'tags'    => ['Comunicaciones','Marketing','Diseño'],
-                    'miembros'=> 3,
-                    'slots'   => 4,
-                    'estado'  => 'Reclutando',
-                    'emoji'   => '📢',
-                ],
-                [
-                    'titulo'  => 'Asesoría Jurídica Comunitaria',
-                    'desc'    => 'Proyecto orientado a brindar información legal básica y apoyo en temas de derechos ciudadanos a comunidades vulnerables.',
-                    'tags'    => ['Ciencias Jurídicas','Derecho','Impacto Social'],
-                    'miembros'=> 5,
-                    'slots'   => 2,
-                    'estado'  => 'Activo',
-                    'emoji'   => '⚖️',
-                ],
-                [
-                    'titulo'  => 'Sistema de Control de Inventario',
-                    'desc'    => 'Desarrollo de una aplicación para gestionar inventarios y generar reportes para pequeñas empresas.',
-                    'tags'    => ['Ingeniería','Base de Datos','Software'],
-                    'miembros'=> 4,
-                    'slots'   => 3,
-                    'estado'  => 'Activo',
-                    'emoji'   => '📦',
-                ],
-                [
-                    'titulo'  => 'Revista Digital Universitaria',
-                    'desc'    => 'Producción de artículos, entrevistas, fotografías y contenido multimedia para una revista estudiantil en línea.',
-                    'tags'    => ['Comunicaciones','Periodismo','Multimedia'],
-                    'miembros'=> 6,
-                    'slots'   => 2,
-                    'estado'  => 'Casi lleno',
-                    'emoji'   => '📰',
-                ],
-                [
-                    'titulo'  => 'Plan de Negocios para Emprendedores',
-                    'desc'    => 'Elaboración de estudios de mercado, análisis financiero y estrategias comerciales para nuevos emprendimientos.',
-                    'tags'    => ['Administración','Negocios','Emprendimiento'],
-                    'miembros'=> 5,
-                    'slots'   => 4,
-                    'estado'  => 'Reclutando',
-                    'emoji'   => '📈',
-                ],
-            ];
-            @endphp
-
-            <div class="frame-grid" id="grid-proyectos">
-                @foreach($proyectos as $proyecto)
-                @php
-                    $total = $proyecto['miembros'] + $proyecto['slots'];
-                    $pct   = round(($proyecto['miembros'] / $total) * 100);
-                    $estadoClass = 'estado-' . str_replace(' ', '-', $proyecto['estado']);
-                    $tagsJson = json_encode($proyecto['tags']);
-                    $busquedaData = strtolower($proyecto['titulo'] . ' ' . $proyecto['desc']);
-                @endphp
-
-                <article
-                    class="frame-card"
-                    data-tags="{{ $tagsJson }}"
-                    data-titulo="{{ $busquedaData }}">
-
+            <div class="frame-grid">
+                @foreach($documentos as $doc)
+                <article class="frame-card" data-titulo="{{ strtolower($doc->descripcion) }}" data-tags='["{{ $doc->categoria->nombre ?? "Sin categoría" }}"]'>
                     <div class="frame-card-header">
-                        <div class="frame-card-emoji">{{ $proyecto['emoji'] }}</div>
-                        <span class="frame-estado {{ $estadoClass }}">{{ $proyecto['estado'] }}</span>
+                        <div class="frame-card-emoji">📂</div>
+                        <span class="frame-estado estado-Activo">Activo</span>
                     </div>
 
-                    <h3>{{ $proyecto['titulo'] }}</h3>
-                    <p>{{ $proyecto['desc'] }}</p>
-
-                    <div class="frame-tags">
-                        @foreach($proyecto['tags'] as $tag)
-                            <span class="frame-tag">{{ $tag }}</span>
-                        @endforeach
-                    </div>
+                    <h3>{{ $doc->categoria->nombre ?? 'Sin categoría' }}</h3>
+                    <p>{{ $doc->descripcion }}</p>
 
                     <div class="frame-members">
                         <div class="frame-members-row">
-                            <span>👥 {{ $proyecto['miembros'] }} miembros</span>
-                            <span>{{ $proyecto['slots'] }} slots libres</span>
-                        </div>
-                        <div class="frame-bar-bg">
-                            <div class="frame-bar-fill" style="width:{{ $pct }}%"></div>
+                            <span>Autor: {{ $doc->user->name }}</span>
                         </div>
                     </div>
 
-                    <button class="frame-btn">Unirse al proyecto →</button>
+                    <a href="{{ route('documentos.show', $doc->id) }}" class="frame-btn">
+                        Ver archivo →
+                    </a>
                 </article>
                 @endforeach
             </div>
 
+            <!-- Sin resultados -->
             <div class="frame-empty" id="sin-resultados">
-                <div style="font-size:3.5rem">🔍</div>
-                <h3 style="color:#fff;font-weight:900;margin:.5rem 0 0">Sin resultados</h3>
-                <p>Intenta con otra búsqueda o categoría.</p>
+                <div style="font-size: 2.5rem;">🔍</div>
+                <p>No se encontraron proyectos con esos filtros.</p>
             </div>
-
         </div>
 
     </main>
@@ -354,7 +274,6 @@
                 <a href="{{ route('conectar') }}">Conectar</a>
                 <a href="{{ route('nosotros') }}">Nosotros</a>
                 <a href="{{ route('profile.edit') }}">Perfil</a>
-                
             </nav>
         </div>
     </footer>
@@ -394,6 +313,11 @@
             document.getElementById('num-resultados').textContent = visibles;
             document.getElementById('sin-resultados').style.display = visibles > 0 ? 'none' : 'block';
         }
+        
+        // Inicializar contador al cargar
+        document.addEventListener("DOMContentLoaded", function() {
+            aplicarFiltros();
+        });
     </script>
 
-    </x-app-layout>
+</x-app-layout>

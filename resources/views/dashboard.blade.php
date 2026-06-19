@@ -1,139 +1,186 @@
 <x-app-layout>
-    <div class="w-full flex items-center justify-center p-4 shadow-md" 
-         style="background: linear-gradient(135deg, #2731F5 0%, #2731F5 100%);">
-        <h2 class="text-white text-center w-full"
-            style="font-family:'Anton',sans-serif;font-style:italic;font-size:clamp(1.5rem,5vw,3.5rem);letter-spacing:2px;text-shadow:0 3px 6px rgba(0,0,0,0.3);line-height:1.2;">
-            {{ __('EXPLORADOR DE PROYECTOS COLABORATIVOS') }}
-        </h2>
-    </div>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        neon: '#CDFC77',
+                        oscuroFondo: '#0d0d0d',
+                        oscuroLateral: '#111111',
+                        grisClaro: '#f3f3f3'
+                    }
+                }
+            }
+        }
+    </script>
 
-    <div class="py-8 bg-gray-100 min-h-screen font-sans antialiased">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&display=swap');
+        .font-impacto {
+            font-family: 'Oswald', 'Arial Black', sans-serif !important;
+        }
+        /* Corrección mágica para asegurar que el iframe ocupe todo el espacio real en pantallas táctiles */
+        .visor-fijo {
+            height: calc(100vh - 70px) !important;
+            min-height: -webkit-fill-available;
+        }
+    </style>
+
+    {{-- INICIALIZAMOS ALPINE: Controlamos el estado del visor --}}
+    <div x-data="{ verDoc: false, docRuta: '', docId: '' }" class="min-h-screen flex flex-col" style="background-color: #0d0d0d !important; color: #ffffff !important;">
+        
+        {{-- CUERPO DE DOS COLUMNAS RESPONSIVAS --}}
+        <div class="w-full flex flex-col lg:flex-row flex-1" style="display: flex !important;">
             
-            <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 items-start">
+            {{-- BARRA LATERAL IZQUIERDA (Se oculta en móvil SOLO cuando el visor de PDF está activo para que no estorbe abajo) --}}
+            <aside x-show="!verDoc" class="w-full lg:w-[340px] p-8 flex flex-col items-center lg:items-stretch space-y-8 shrink-0" style="background-color: #111111 !important; min-width: 340px !important;">
                 
-                <div class="lg:col-span-1 bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden sticky top-6">
-                    <div class="h-16 bg-gradient-to-r from-blue-600 to-indigo-700"></div>
-                        <div class="p-4 text-center -mt-8">
-                        
+                {{-- Foto de Perfil con el Aro Azul Eléctrico --}}
+                <div class="flex justify-center w-full pt-4">
+                    <div class="w-48 h-48 rounded-full overflow-hidden p-1.5 flex items-center justify-center shrink-0 shadow-2xl" style="background-color: #0014ff !important;">
                         @if(Auth::user()->foto_perfil)
-                            <img class="inline-block h-16 w-16 rounded-full object-cover border-4 border-white shadow-md" 
-                                src="{{ asset('storage/' . Auth::user()->foto_perfil) }}" 
-                                alt="Foto de {{ Auth::user()->name }}">
+                            <img src="{{ asset('storage/' . Auth::user()->foto_perfil) }}" class="object-cover w-full h-full rounded-full" alt="Perfil">
                         @else
-                            <div class="inline-flex items-center justify-center h-16 w-16 rounded-full bg-indigo-600 text-white text-xl font-bold border-4 border-white shadow-md uppercase">
+                            <div class="w-full h-full flex items-center justify-center text-white text-5xl font-bold uppercase rounded-full" style="background-color: #0014ff !important;">
                                 {{ substr(Auth::user()->name, 0, 2) }}
                             </div>
                         @endif
-
-                        <h2 class="mt-3 font-bold text-gray-800 text-lg leading-tight">{{ Auth::user()->name }}</h2>
-                        <p class="text-xs font-semibold text-indigo-600 tracking-wider uppercase mt-1">
-                            {{ Auth::user()->carrera ?? 'Estudiante' }}
-                        </p>
-                        <div class="mt-3 pt-3 border-t border-gray-100 text-left text-xs text-gray-500 space-y-1">
-                            <p><span class="font-medium text-gray-700">Carnet:</span> {{ Auth::user()->carnet ?? 'N/A' }}</p>
-                            <p><span class="font-medium text-gray-700">Correo:</span> {{ Auth::user()->email }}</p>
-                        </div>
                     </div>
                 </div>
 
-                <div class="lg:col-span-2 space-y-6">
+                {{-- Nombre del Usuario --}}
+                <div class="text-center lg:text-left space-y-2 w-full px-2">
+                    <h2 class="font-impacto text-4xl font-bold text-[#CDFC77] uppercase tracking-tight leading-none break-words">
+                        @php
+                            $nombreCompleto = Auth::user()->name;
+                            $palabras = explode(' ', $nombreCompleto);
+                            $mitad = ceil(count($palabras) / 2);
+                            $linea1 = implode(' ', array_slice($palabras, 0, $mitad));
+                            $linea2 = implode(' ', array_slice($palabras, $mitad));
+                        @endphp
+                        {{ $linea1 }}<br><span class="text-white">{{ $linea2 }}</span>
+                    </h2>
+                    <p class="text-xs text-gray-400 font-sans tracking-wide uppercase font-semibold">
+                        {{ Auth::user()->carrera ?? 'Ingeniería En Ciencias De La Computación' }}
+                    </p>
+                </div>
+
+                {{-- Botón Editar Perfil --}}
+                <div class="w-full px-2 pt-4">
+                    <a href="{{ route('profile.edit') }}" class="font-impacto block w-full text-black font-bold text-center py-3.5 uppercase tracking-widest text-xs transition-all bg-[#CDFC77] hover:bg-white" style="background-color: #CDFC77 !important; color: #000000 !important;">
+                        Editar Perfil
+                    </a>
+                </div>
+            </aside>
+
+            {{-- PANEL DERECHO DINÁMICO --}}
+            <div class="flex-1 flex flex-col relative min-h-screen lg:h-screen overflow-hidden">
+                
+                {{-- 1. VISTA GENERAL DEL DASHBOARD (Se muestra si verDoc es falso) --}}
+                <main x-show="!verDoc" class="w-full h-full p-6 lg:p-14 space-y-14 overflow-y-auto" style="background-color: #fcfcfc !important; color: #111111 !important;">
                     
-                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4">
-                        <div class="flex items-center space-x-3">
-                            <div class="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center font-bold text-gray-600 uppercase">
-                                {{ substr(Auth::user()->name, 0, 1) }}
-                            </div>
-                            <button onclick="window.location.href='{{ route('profile.edit') }}'" class="flex-1 text-left bg-gray-100 hover:bg-gray-200 text-gray-500 rounded-full py-2.5 px-5 text-sm transition-colors duration-200 border border-gray-200">
-                                ¿Qué proyecto o iniciativa estás desarrollando hoy, {{ explode(' ', Auth::user()->name)[0] }}?
-                            </button>
+                    {{-- SECCIÓN: MIS DOCUMENTOS --}}
+                    <section>
+                        <h3 class="font-impacto text-3xl font-bold text-gray-900 uppercase tracking-tight mb-6 border-b border-gray-200 pb-2">
+                            Mis Documentos
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            @forelse($documentos as $doc)
+                                <div class="bg-white border border-gray-200 rounded-xl p-6 flex flex-col justify-between shadow-sm hover:shadow-md transition-shadow">
+                                    <div>
+                                        <div class="w-full h-36 bg-gray-100 rounded-lg mb-4 overflow-hidden border border-gray-200 flex items-center justify-center">
+                                            @if($doc->imagen)
+                                                <img src="{{ asset('storage/' . $doc->imagen) }}" class="object-cover w-full h-full">
+                                            @else
+                                                <span class="text-3xl text-gray-300">📄</span>
+                                            @endif
+                                        </div>
+                                        <h4 class="font-impacto text-lg font-bold text-gray-900 uppercase tracking-tight">{{ $doc->titulo }}</h4>
+                                        <p class="text-xs text-gray-600 mt-2 leading-relaxed font-sans">{{ Str::limit($doc->descripcion, 140) }}</p>
+                                    </div>
+                                    
+                                    {{-- AL DAR CLIC: Activa el visor --}}
+                                    <button type="button" 
+                                            @click="docRuta = '{{ asset('storage/' . $doc->ruta) }}'; docId = '{{ $doc->id }}'; verDoc = true; window.scrollTo(0,0);"
+                                            class="font-impacto text-left text-xs text-[#0014ff] hover:text-[#CDFC77] uppercase tracking-widest transition-colors font-bold mt-4 cursor-pointer">
+                                        Ver Proyecto →
+                                    </button>
+                                </div>
+                            @empty
+                                <p class="text-gray-500 text-sm">No tienes documentos registrados.</p>
+                            @endforelse
                         </div>
+                    </section>
+
+                    {{-- SECCIÓN: HABILIDADES --}}
+                    <section>
+                        <h3 class="font-impacto text-3xl font-bold text-gray-900 uppercase tracking-tight mb-6 border-b border-gray-200 pb-2">Habilidades</h3>
+                        <div class="flex flex-wrap gap-2">
+                            @php
+                                $habilidadesUsuario = Auth::user()->habilidades ?? ['Diseño UI', 'React', 'Figma', 'Colaboración', 'Javascript'];
+                            @endphp
+                            @foreach($habilidadesUsuario as $habilidad)
+                                <span class="font-impacto text-black text-xs font-bold px-4 py-2.5 uppercase tracking-widest shadow-sm" style="background-color: #CDFC77 !important; color: #000000 !important;">
+                                    {{ $habilidad }}
+                                </span>
+                            @endforeach
+                        </div>
+                    </section>
+
+                    {{-- SECCIÓN: MENSAJES RECIENTES --}}
+                    <section>
+                        <h3 class="font-impacto text-3xl font-bold text-gray-900 uppercase tracking-tight mb-6 border-b border-gray-200 pb-2">Mensajes Recientes</h3>
+                        <div class="space-y-0 font-sans">
+                            <div class="border-b border-gray-200 py-4 flex justify-between items-baseline">
+                                <p class="text-xs m-0"><span class="font-bold text-gray-900">Carlos Ruiz:</span><span class="text-gray-700 ml-1">¿Te interesa colaborar en el hackathon?</span></p>
+                                <span class="text-[10px] text-gray-400 font-bold">2:32 AM</span>
+                            </div>
+                        </div>
+                    </section>
+                </main>
+
+                {{-- 2. VISOR COMPLETAMENTE INTEGRADO Y ULTRA-COMPATIBLE CON MÓVILES (Sin Google Docs) --}}
+                <div x-show="verDoc" class="w-full flex-1 flex flex-col bg-[#111111]" style="display: none;">
+                    
+                    {{-- Encabezado --}}
+                    <div class="px-4 lg:px-8 py-4 bg-[#0d0d0d] border-b border-white/10 flex items-center justify-between shrink-0">
+                        <div class="flex items-center gap-2">
+                            <div class="w-2.5 h-2.5 rounded-full bg-[#0014ff] animate-pulse"></div>
+                            <span class="font-impacto text-white text-xs lg:text-lg uppercase tracking-wider">
+                                Doc ID: <span x-text="docId" class="text-[#CDFC77]"></span>
+                            </span>
+                        </div>
+                        
+                        {{-- Botón para VOLVER --}}
+                        <button type="button" 
+                                @click="verDoc = false; docRuta = '';" 
+                                class="font-impacto text-[11px] lg:text-xs bg-[#CDFC77] text-black font-bold px-3 py-2 uppercase tracking-widest hover:bg-white transition-all cursor-pointer">
+                            ← Volver
+                        </button>
                     </div>
 
-                    @forelse($usuarios as $user)
-                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden transition-all duration-200 hover:shadow-md">
-                            
-                            <div class="p-4 flex items-center justify-between border-b border-gray-50">
-                                <div class="flex items-center space-x-3">
-                                    <div class="h-11 w-11 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center font-bold text-white shadow-sm uppercase">
-                                        {{ substr($user->name, 0, 2) }}
-                                    </div>
-                                    <div>
-                                        <h3 class="font-bold text-gray-900 text-sm hover:text-indigo-600 hover:underline cursor-pointer">
-                                            {{ $user->name }}
-                                        </h3>
-                                        <p class="text-xs text-gray-500 flex items-center mt-0.5">
-                                            <span class="font-medium text-gray-700">{{ $user->carrera ?? 'Carrera no especificada' }}</span>
-                                            <span class="mx-1.5 text-gray-300">•</span>
-                                            <span>Carnet: {{ $user->carnet ?? 'N/A' }}</span>
-                                        </p>
-                                    </div>
+                    {{-- Cuerpo del PDF: Usamos <object> con fallback de descarga si el móvil es muy viejo --}}
+                    <div class="flex-1 bg-[#161616] relative w-full visor-fijo">
+                        <template x-if="verDoc">
+                            <object :data="docRuta" type="application/pdf" class="w-full h-full absolute inset-0 block" style="width: 100%; height: 100%;">
+                                {{-- Si el navegador móvil es super estricto y no renderiza el objeto, le da un botón de emergencia limpio --}}
+                                <div class="absolute inset-0 flex flex-col items-center justify-center p-6 text-center bg-[#161616]">
+                                    <span class="text-4xl mb-4">📄</span>
+                                    <p class="text-white text-sm font-sans mb-4">Tu dispositivo requiere abrir el PDF en una pestaña dedicada.</p>
+                                    <a :href="docRuta" target="_blank" class="font-impacto bg-[#0014ff] text-white px-6 py-3 uppercase text-xs tracking-widest hover:bg-[#CDFC77] hover:text-black transition-colors">
+                                        Abrir Documento Directo
+                                    </a>
                                 </div>
-                                <span class="bg-indigo-50 text-indigo-700 text-xs px-2.5 py-1 rounded-full font-semibold tracking-wide">
-                                    Comunidad
-                                </span>
-                            </div>
-
-                            <div class="p-5 bg-gray-50/50">
-                                @if($user->proyectos && $user->proyectos->count() > 0)
-                                    <div class="space-y-4">
-                                        @foreach($user->proyectos as $proyecto)
-                                            <div class="bg-white p-4 rounded-lg border border-gray-150 shadow-xs">
-                                                <div class="flex items-center justify-between">
-                                                    <h4 class="font-semibold text-gray-800 text-base">{{ $proyecto->titulo }}</h4>
-                                                    @if($proyecto->categoria)
-                                                        <span class="text-[10px] bg-green-50 text-green-700 px-2 py-0.5 rounded font-bold uppercase">{{ $proyecto->categoria }}</span>
-                                                    @endif
-                                                </div>
-                                                <p class="text-sm text-gray-600 mt-2 leading-relaxed">{{ $proyecto->descripcion }}</p>
-                                            </div>
-                                        @endforeach
-                                    </div>
-                                @else
-                                    <div class="text-center py-6 px-4">
-                                        <svg class="mx-auto h-10 w-10 text-gray-400 stroke-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 14.15v4.25c0 .414-.336.75-.75.75H4.5a.75.75 0 0 1-.75-.75V14.15M20.25 14.15a2.25 2.25 0 0 0-2.25-2.25H6a2.25 2.25 0 0 0-2.25 2.25M20.25 14.15M4.5 14.15" />
-                                        </svg>
-                                        <h4 class="mt-2 text-sm font-semibold text-gray-700">Sin proyectos publicados</h4>
-                                        <p class="text-xs text-gray-400 mt-1 max-w-xs mx-auto">Este estudiante aún no ha registrado iniciativas o proyectos colaborativos en su portafolio.</p>
-                                    </div>
-                                @endif
-                            </div>
-
-                            <div class="px-4 py-2 bg-white border-t border-gray-100 flex items-center justify-between text-xs text-gray-500 font-medium">
-                                <button class="flex items-center space-x-1.5 py-1.5 px-3 rounded-lg hover:bg-gray-100 hover:text-indigo-600 transition-colors duration-150">
-                                    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M14 10h4.757a1 1 0 00.707-1.707l-5.414-5.414a1 1 0 00-1.414 0L7.222 8.293a1 1 0 00.707 1.707H13v6a3 3 0 01-3 3H7M14 10v6a3 3 0 003 3h3" /></svg>
-                                    <span>Me interesa</span>
-                                </button>
-                                <a href="mailto:{{ $user->email }}" class="flex items-center space-x-1.5 py-1.5 px-3 rounded-lg hover:bg-indigo-50 hover:text-indigo-600 text-indigo-500 transition-colors duration-150">
-                                    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
-                                    <span>Contactar</span>
-                                </a>
-                            </div>
-                        </div>
-                    @empty
-                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-8 text-center text-gray-500">
-                            No hay compañeros registrados en este momento.
-                        </div>
-                    @endforelse
-                </div>
-
-                <div class="lg:col-span-1 bg-white rounded-xl shadow-sm border border-gray-200 p-4 sticky top-6 space-y-4">
-                    <h3 class="font-bold text-gray-800 text-sm tracking-wide uppercase">Iniciativas UCAD</h3>
-                    <div class="text-xs space-y-3">
-                        <div class="p-2.5 bg-indigo-50/50 rounded-lg border border-indigo-100">
-                            <p class="font-bold text-indigo-900">Conexión Multidisciplinaria</p>
-                            <p class="text-gray-600 mt-0.5">Explorá los perfiles para armar equipos de proyectos científicos o de graduación.</p>
-                        </div>
-                        <div class="p-2.5 bg-emerald-50/50 rounded-lg border border-emerald-100">
-                            <p class="font-bold text-emerald-900">Tip de Visibilidad</p>
-                            <p class="text-gray-600 mt-0.5">Ve a tu sección de Perfil para actualizar tus datos y subir tus archivos de validación.</p>
-                        </div>
+                            </object>
+                        </template>
                     </div>
                 </div>
 
             </div>
-            
         </div>
     </div>
+
+    {{-- Script de Alpine --}}
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </x-app-layout>

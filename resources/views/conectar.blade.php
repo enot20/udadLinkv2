@@ -531,12 +531,11 @@
             <a href="#">Perfil</a>
             <a href="#">Contacto</a>
         </nav>
-        <div class="ce-footer-social">
-            <a href="#" aria-label="Facebook">f</a>
-            <a href="#" aria-label="X">𝕏</a>
-            <a href="#" aria-label="LinkedIn">in</a>
-            <a href="#" aria-label="YouTube">▶</a>
-        </div>
+<div class="ce-footer-social">
+    <a href="https://www.facebook.com/profile.php?id=61567607833578" target="_blank" rel="noopener noreferrer" aria-label="Facebook">f</a>
+    <a href="https://www.instagram.com/ucadlink/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">Ig</a>
+
+</div>
         <div class="ce-footer-copy">
             Desarrollado por Spom | Comunidad Estudiantil &nbsp;·&nbsp; © {{ date('Y') }}
         </div>

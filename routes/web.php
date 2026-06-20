@@ -102,4 +102,17 @@ Route::get('/conectar', 'App\Http\Controllers\ComunidadController@conectar')
     Route::get('/proyectos', [DocumentoController::class, 'index'])->name('proyectos');
 Route::get('/documentos/{id}', [DocumentoController::class, 'show'])->name('documentos.show');
 
+
+
+
+
+
+// Daniel
+Route::get('/conectar', function () {
+    $estudiantes = \App\Models\User::select('id','name','email','carrera','habilidades','foto_perfil')
+        ->get();
+    return view('conectar', compact('estudiantes'));
+})->middleware(['auth'])->name('conectar');
+
+
 });

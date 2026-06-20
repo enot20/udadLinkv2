@@ -111,6 +111,7 @@
                 border-radius: 16px;
                 padding: 1.5rem;
             }
+
         }
     </style>
 </head>

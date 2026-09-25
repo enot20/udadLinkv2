@@ -2,10 +2,12 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Models\User;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
@@ -28,8 +30,17 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'string', 'email', 'ends_with:ucad.edu.sv'],
-            'password' => ['required', 'string'],
+            'email' => [
+                'required',
+                'string',
+                'email',
+                'ends_with:@ucad.edu.sv',
+            ],
+
+            'password' => [
+                'required',
+                'string',
+            ],
         ];
     }
 
@@ -39,7 +50,11 @@ class LoginRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'email.ends_with' => 'El correo debe ser institucional (@ucad.edu.sv)',
+            'email.required' => 'Ingresa tu correo electrónico.',
+            'email.email' => 'Ingresa un correo electrónico válido.',
+            'email.ends_with' => 'El correo debe ser institucional (@ucad.edu.sv).',
+
+            'password.required' => 'Ingresa tu contraseña.',
         ];
     }
 
@@ -52,13 +67,40 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-        if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
+        /*
+         * Buscar primero si el correo existe.
+         */
+        $user = User::where('email', $this->email)->first();
+
+        /*
+         * El correo no existe.
+         */
+        if (!$user) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
-                'email' => trans('auth.failed'),
+                'email' => 'El correo electrónico ingresado no está registrado.',
             ]);
         }
+
+        /*
+         * El correo existe, pero la contraseña no coincide.
+         */
+        if (!Hash::check($this->password, $user->password)) {
+            RateLimiter::hit($this->throttleKey());
+
+            throw ValidationException::withMessages([
+                'password' => 'La contraseña ingresada es incorrecta.',
+            ]);
+        }
+
+        /*
+         * Credenciales correctas.
+         */
+        Auth::login(
+            $user,
+            $this->boolean('remember')
+        );
 
         RateLimiter::clear($this->throttleKey());
     }
@@ -70,7 +112,7 @@ class LoginRequest extends FormRequest
      */
     public function ensureIsNotRateLimited(): void
     {
-        if (! RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
+        if (!RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
             return;
         }
 
@@ -91,6 +133,8 @@ class LoginRequest extends FormRequest
      */
     public function throttleKey(): string
     {
-        return Str::transliterate(Str::lower($this->string('email')).'|'.$this->ip());
+        return Str::transliterate(
+            Str::lower($this->string('email')) . '|' . $this->ip()
+        );
     }
 }
